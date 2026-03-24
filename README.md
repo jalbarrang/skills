@@ -19,3 +19,9 @@ These skills help you think through problems before writing code.
   ```
   npx skills@latest add jalbarrang/skills/implement-plan
   ```
+
+- **code-reviewer** — Reads your latest changes and does its best to find code inconsistencies and possible bugs.
+
+  ```
+  npx skills@latest add jalbarrang/skills/code-reviewer
+  ```
