@@ -1,27 +1,60 @@
 # Agent Skills
 
-A collection of agent skills that extend capabilities across planning, development, and tooling.
+A collection of agent skills that extend capabilities across planning,
+development, and tooling. Install any skill with:
+
+```
+npx skills@latest add jalbarrang/skills/<name>
+```
 
 ## Planning & Design
 
-These skills help you think through problems before writing code.
+Think through problems before writing code.
 
-- **create-implementation-plans** — Based on PRD or after a brainstorming session this skill helps create different implementation plan files that agents can be delegated to, inspired by Cursor's Plan Mode.
-
-  ```
-  npx skills@latest add jalbarrang/skills/create-implementation-plans
-  ```
-
-## Coding and Implementation
-
-- **create-implementation-plans** — Implement a `.plan.md` file by working through its todo items in order, updating frontmatter status as each task completes.
+- **plan-mode** — Turn a goal, PRD, or brainstorm into grounded, self-contained
+  `.plan.md` files, then execute them task-by-task with drift checks and
+  verification gates. Unifies plan creation and implementation.
 
   ```
-  npx skills@latest add jalbarrang/skills/implement-plan
+  npx skills@latest add jalbarrang/skills/plan-mode
   ```
 
-- **code-reviewer** — Reads your latest changes and does its best to find code inconsistencies and possible bugs.
+## Coding & Implementation
+
+- **code-reviewer** — Multi-pass code review: parallel discovery, majority
+  voting, skeptical verification. Finds bugs and inconsistencies in your latest
+  changes.
 
   ```
   npx skills@latest add jalbarrang/skills/code-reviewer
+  ```
+
+- **ast-grep** — Structural (AST-based) code search and rewrite via the
+  `ast-grep` CLI. Match code by shape and run mechanical refactors.
+
+  ```
+  npx skills@latest add jalbarrang/skills/ast-grep
+  ```
+
+- **handoff** — Distill the current conversation into a self-contained prompt you
+  can paste into a fresh chat. Lossless context transfer instead of compaction.
+
+  ```
+  npx skills@latest add jalbarrang/skills/handoff
+  ```
+
+## Tooling & Workflow
+
+- **pr-babysitter** — Watch a PR's CI checks until they settle and surface new
+  review/bot comments, using the `gh` CLI.
+
+  ```
+  npx skills@latest add jalbarrang/skills/pr-babysitter
+  ```
+
+- **context-folders** — Search and reference code in additional project folders
+  outside the current workspace, by absolute path.
+
+  ```
+  npx skills@latest add jalbarrang/skills/context-folders
   ```
