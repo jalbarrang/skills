@@ -1,112 +1,63 @@
 ---
 name: code-reviewer
-description: Runs a structured multi-pass code review using parallel discovery passes, majority voting, and skeptical verification. Use when reviewing pull requests, branch diffs, or when the user asks for a bug-focused code review.
+description: Bug-focused code review driven by a per-project review context. Runs a context-aware discovery pass and a skeptical verifier over a diff, then reports findings in severity tiers. Use when reviewing pull requests, branch diffs, or when the user asks for a bug-focused code review. Sub-commands - init, review, learn, status.
+argument-hint: "[init|review|learn|status] [target]"
+user-invocable: true
 disable-model-invocation: true
 ---
 
 # Code Reviewer
 
-This skill runs a local multi-pass code review workflow inspired by Bugbot:
-parallel discovery, majority voting, and conservative verification.
+A bug-focused review workflow whose signal comes from a **per-project review
+context** (`.code-reviewer/context.md`). The context carries the nuance a generic
+reviewer can't know: the invariants worth protecting, the intentional patterns
+that look like bugs but aren't, and the failure classes this codebase actually
+ships. Without it, review is generic; with it, review is sharp.
 
-## Setup
+The context file is maintained by the **anti-rot principle**: durable invariants,
+one owner per fact, every line changes a review decision, and a `learn` loop that
+folds each miss back in. See `references/CONTEXT-TEMPLATE.md` for the shape.
 
-1. Attempt to read project context:
-   - `references/PROJECT-CONTEXT.md`
-2. If `PROJECT-CONTEXT.md` is missing or unreadable:
-   - Continue with a generalized review flow.
-   - Do not auto-generate project context.
-   - Mention in final output that project-specific context was unavailable.
-   - Suggest `/setup-code-review` only as an optional next step.
-3. Collect the review target:
-   - Use `git diff main...HEAD` unless the user provides a different base.
-4. Enumerate changed files and read full file context for each changed file.
+## Setup (run before any command)
 
-If there is no diff, report that there are no changes to review and stop.
+1. Read `.code-reviewer/context.md` in the project root.
+   - **Present** → review runs in `project-specific` mode. Treat its invariants,
+     intentional patterns, and severity calibration as authoritative.
+   - **Missing or unreadable** → review runs in `generalized` mode. Do NOT
+     auto-generate context. For any command except `init`, tell the user once:
+     "No project review context found — run `/code-reviewer init` to make reviews
+     project-aware." Then continue the requested command in generalized mode and
+     say so in the final output.
+2. Parse the first argument word to pick a command (routing below). Everything
+   after the command name is the target/argument.
 
-## Phase 1: Discovery (Parallel)
+## Commands
 
-Run three independent discovery passes with the `bug-finder` subagent in
-parallel. Give each pass the same diff and project context, but different file
-ordering instructions:
+| Command | Description | Reference |
+|---|---|---|
+| `init` | Interview + codebase scan → write `.code-reviewer/context.md` | [references/init.md](references/init.md) |
+| `review [target]` | Run a review over a diff and report tiered findings | [references/review.md](references/review.md) |
+| `learn [note]` | Fold a false positive or a missed bug into the context (anti-rot) | [references/learn.md](references/learn.md) |
+| `status` | Report what review context exists and whether it is stale | [references/status.md](references/status.md) |
 
-- Pass A: alphabetical path order
-- Pass B: reverse alphabetical order
-- Pass C: dependency-aware order (lower-level packages first)
+### Routing rules
 
-Each pass must output structured findings with:
+1. **First word is `init` / `review` / `learn` / `status`** → read that
+   command's reference file and follow it. This is non-optional; the reference
+   owns the flow.
+2. **First word doesn't match a command** → treat the entire argument as a
+   `review` target (e.g. `/code-reviewer src/auth` → review scoped to `src/auth`).
+   Load `references/review.md`.
+3. **No argument** → if context is missing, recommend `init`. Otherwise run
+   `review` against the default target (`git diff main...HEAD`).
 
-- `file`
-- `lineRange`
-- `category`
-- `severity` (1-10)
-- `confidence` (0-100)
-- `summary`
-- `reasoning`
+## Operating rules
 
-Allowed categories:
-
-- logic
-- state-management
-- null-safety
-- control-flow
-- security
-- concurrency
-- type-safety
-- error-handling
-
-Explicitly exclude:
-
-- style, formatting, naming, comments, docs
-- import sorting
-- backwards-compatibility warnings unless explicitly requested
-- optional refactor suggestions that are not bugs
-
-## Phase 2: Majority Voting
-
-Merge findings from all discovery passes:
-
-1. Group by `file + lineRange + category`.
-2. Keep only findings reported by at least two independent passes.
-3. For merged findings, preserve the strongest concise rationale and keep the
-   highest confidence score as the starting confidence for verification.
-
-## Phase 3: Verification
-
-Send merged findings to the `bug-verifier` subagent.
-
-Verifier requirements:
-
-- Re-read broad context (100+ lines around each finding)
-- Trace reachability
-- Check for existing guards and related tests
-- Cross-check project-specific known intentional patterns when context exists
-- Re-score severity and confidence
-- Drop findings below `confidence < 50`
-
-## Phase 4: Final Report
-
-Return findings in three tiers:
-
-- **Critical**: `severity >= 8` and `confidence >= 70`
-- **Important**: `severity >= 5` and `confidence >= 60`
-- **Minor**: `severity >= 3` and `confidence >= 50`
-
-Also include:
-
-- Dismissed findings (concise reason for dismissal)
-- Context mode:
-  - `project-specific` when `PROJECT-CONTEXT.md` was used
-  - `generalized` when project context was unavailable
-- Review metadata:
-  - files reviewed
-  - findings from discovery
-  - findings after majority voting
-  - findings after verification
-  - final findings count
-
-## Operating Rules
-
-- Prioritize correctness and reliability bugs.
-- Be explicit and evidence-driven.
-- If there are no findings, clearly state that no actionable bugs were found.
+- Prioritize correctness and reliability bugs. Exclude style, naming, formatting,
+  comments, docs, and optional refactors that are not bugs.
+- Be explicit and evidence-driven. Every finding cites file, line range, and a
+  traceable reason.
+- When `context.md` says a pattern is intentional, the verifier must honor it —
+  do not re-flag suppressed patterns.
+- After a review, if the user says a finding was wrong (false positive) or names a
+  bug you missed, offer `/code-reviewer learn` so the lesson sticks.

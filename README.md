@@ -23,9 +23,12 @@ Think through problems before writing code.
 
 ## Coding & Implementation
 
-- **code-reviewer** — Multi-pass code review: parallel discovery, majority
-  voting, skeptical verification. Finds bugs and inconsistencies in your latest
-  changes.
+- **code-reviewer** — Bug-focused review driven by a per-project context.
+  `init` interviews your repo and writes `.code-reviewer/context.md` (the
+  invariants, intentional patterns, and bug classes that make review sharp);
+  `review` runs a context-aware discovery pass plus a skeptical verifier and
+  reports tiered findings; `learn` folds each wrong call back into the context
+  (anti-rot); `status` checks context health.
 
   ```
   npx skills@latest add jalbarrang/skills/code-reviewer
