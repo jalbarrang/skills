@@ -86,22 +86,6 @@ Turn changes and decisions into clear, scannable artifacts.
   npx skills@latest add jalbarrang/skills/write-a-skill
   ```
 
-## Tooling & Workflow
-
-- **pr-babysitter** — Watch a PR's CI checks until they settle and surface new
-  review/bot comments, using the `gh` CLI.
-
-  ```
-  npx skills@latest add jalbarrang/skills/pr-babysitter
-  ```
-
-- **context-folders** — Search and reference code in additional project folders
-  outside the current workspace, by absolute path.
-
-  ```
-  npx skills@latest add jalbarrang/skills/context-folders
-  ```
-
 ## Communication
 
 - **adhd-mode** — Shape output for a reader with ADHD: lead with the next action,
