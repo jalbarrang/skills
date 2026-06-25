@@ -45,6 +45,47 @@ Think through problems before writing code.
   npx skills@latest add jalbarrang/skills/handoff
   ```
 
+## Writing & Docs
+
+Turn changes and decisions into clear, scannable artifacts.
+
+- **write-pr** — Write concise, high-signal pull request descriptions with
+  mermaid diagrams. Best for architectural, contract, data-flow, or
+  state-machine changes where a diagram beats prose.
+
+  ```
+  npx skills@latest add jalbarrang/skills/write-pr
+  ```
+
+- **write-an-adr** — Create Architecture Decision Records. Compact by default
+  (title + summary), extended Nygard format when the decision warrants it.
+
+  ```
+  npx skills@latest add jalbarrang/skills/write-an-adr
+  ```
+
+- **write-context-file** — Create or maintain project context files
+  (`AGENTS.md`, `CLAUDE.md`) using the anti-rot principle: durable invariants
+  with single owners, no drift-prone inventories.
+
+  ```
+  npx skills@latest add jalbarrang/skills/write-context-file
+  ```
+
+- **changelog-announce** — Generate Slack-friendly changelog announcements from
+  git diffs or described changes. Non-technical, copy-paste ready.
+
+  ```
+  npx skills@latest add jalbarrang/skills/changelog-announce
+  ```
+
+- **write-a-skill** — Author new agent skills with proper structure, progressive
+  disclosure, and bundled resources.
+
+  ```
+  npx skills@latest add jalbarrang/skills/write-a-skill
+  ```
+
 ## Tooling & Workflow
 
 - **pr-babysitter** — Watch a PR's CI checks until they settle and surface new
@@ -59,4 +100,14 @@ Think through problems before writing code.
 
   ```
   npx skills@latest add jalbarrang/skills/context-folders
+  ```
+
+## Communication
+
+- **adhd-mode** — Shape output for a reader with ADHD: lead with the next action,
+  number multi-step work, externalize state across turns, suppress tangents, and
+  make wins visible.
+
+  ```
+  npx skills@latest add jalbarrang/skills/adhd-mode
   ```
