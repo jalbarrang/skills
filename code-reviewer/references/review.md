@@ -24,9 +24,22 @@ error-handling. It excludes style, naming, comments, docs, formatting, import
 ordering, and optional refactors. Each finding carries: `file`, `lineRange`,
 `category`, `severity` (1-10), `confidence` (0-100), `summary`, `reasoning`.
 
-## Step 3: Verification
+## Step 3: Verification (conditional gate)
 
-Pass every finding to the `bug-verifier` subagent. It must:
+Verification is the false-positive killer, but it costs a second subagent pass.
+Run it only when the findings warrant the cost.
+
+**Skip the verifier entirely when** the finder returned `No findings`, OR every
+finding is `severity < 5` AND none of their files/areas appear in the context's
+**Critical invariants** or **Historical bug classes**. In that case, report the
+findings (all Minor) tagged `unverified — below verification threshold`, note the
+diff was low-risk, and skip to Step 4.
+
+**Otherwise run the `bug-verifier` subagent** — i.e. whenever ANY finding has
+`severity >= 5`, OR touches a file/area named under the context's critical
+invariants or historical bug classes. Pass it the full finding set (not just the
+triggering ones) so low-severity findings near a high-stakes change are checked
+too. The verifier must:
 
 - Re-read 100+ lines of context around each finding.
 - Trace reachability — is the buggy path actually reachable?
@@ -40,19 +53,22 @@ Output per finding: `CONFIRMED` (with updated scores + evidence) or `DISMISSED`
 
 ## Step 4: Tiered report
 
-Group confirmed findings:
+Group findings (verified scores when the verifier ran; finder scores otherwise):
 
 - **Critical** — `severity >= 8` and `confidence >= 70`
 - **Important** — `severity >= 5` and `confidence >= 60`
 - **Minor** — `severity >= 3` and `confidence >= 50`
 
-A finding lands in the highest tier whose thresholds it meets. Also include:
+A finding lands in the highest tier whose thresholds it meets. Tag any finding
+that skipped verification (Step 3 gate) as `unverified`. Also include:
 
-- **Dismissed** — each with its one-line reason.
+- **Dismissed** — each with its one-line reason (only when the verifier ran).
 - **Context mode** — `project-specific` (context was used) or `generalized`
   (context absent; recommend `/code-reviewer init`).
+- **Verification** — `ran` or `skipped (low-risk diff)`, so the reader knows
+  whether findings were independently checked.
 - **Metadata** — files reviewed, findings from discovery, findings after
-  verification, final count.
+  verification (or `n/a` when skipped), final count.
 
 If there are no confirmed findings, say so plainly — do not invent concerns.
 
