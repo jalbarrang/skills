@@ -11,12 +11,14 @@ npx skills@latest add jalbarrang/skills/<name>
 
 Think through problems before writing code.
 
-- **plan-mode** — Turn a goal, PRD, or brainstorm into grounded, self-contained
-  `.plan.md` files, then execute them task-by-task with drift checks and
-  verification gates. Unifies plan creation and implementation.
+- **planwork** — Turn a goal, PRD, or brainstorm into a grounded, self-contained
+  plan in the harness-agnostic `.plans/` ledger (via the `taskman` CLI), then
+  execute it task-by-task with drift checks and verification gates. Unifies plan
+  creation and implementation; references-folder modes cover deliberation
+  (`context.md`) and visual prototypes.
 
   ```
-  npx skills@latest add jalbarrang/skills/plan-mode
+  npx skills@latest add jalbarrang/skills/planwork
   ```
 
 ## Coding & Implementation
