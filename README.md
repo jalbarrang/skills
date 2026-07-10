@@ -47,12 +47,6 @@ Think through problems before writing code.
   npx skills@latest add jalbarrang/skills/commit
   ```
 
-- **lsp** — One-shot LSP queries (diagnostics, hover, definitions, references, symbols) by spawning the project's language server. For harnesses without native LSP.
-
-  ```
-  npx skills@latest add jalbarrang/skills/lsp
-  ```
-
 - **context7** — Fetch current, version-accurate library docs from Context7 before coding against a third-party API, with a persistent local cache and raw-document retrieval by docRef.
 
   ```
