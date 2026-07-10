@@ -16,7 +16,7 @@ export DD_API_KEY=...
 export DD_APP_KEY=...
 ```
 
-2. Optional project config at `.agents/datadog.json` (or `~/.agents/datadog.json` / `.pi/datadog.json`):
+2. Optional project config at `.agents/datadog.json` (or `~/.agents/datadog.json`):
 
 ```json
 {

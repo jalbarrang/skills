@@ -1,8 +1,7 @@
 /**
- * Canonical config resolver template.
- * Copy verbatim into each skill as scripts/lib/config.mjs — never import across skills.
+ * Canonical config resolver template. Copy verbatim into each skill as scripts/lib/config.mjs — never import across skills.
  *
- * Precedence (highest wins): project .agents/<skill>.json > ~/.agents/<skill>.json > .pi/<skill>.json (compat) > caller defaults.
+ * Precedence (highest wins): project .agents/<skill>.json > ~/.agents/<skill>.json > caller defaults.
  * String values that start with `$` are interpolated from process.env (empty string if unset).
  * Malformed JSON is skipped with a one-line stderr warning.
  */
@@ -88,15 +87,8 @@ export function loadConfig(skillName, defaults = {}) {
 
   const projectPath = findUp(cwd, '.agents', fileName);
   const globalPath = path.join(os.homedir(), '.agents', fileName);
-  const piPath = findUp(cwd, '.pi', fileName);
-
-  // Merge lowest → highest: defaults < pi-compat < global < project
-  const layers = [
-    defaults,
-    readJsonFile(piPath),
-    readJsonFile(globalPath),
-    readJsonFile(projectPath),
-  ];
+  // Merge lowest → highest: defaults < global < project
+  const layers = [defaults, readJsonFile(globalPath), readJsonFile(projectPath)];
 
   const merged = {};
   for (const layer of layers) {

@@ -24,8 +24,7 @@ Precedence, highest wins:
 
 1. Project `.agents/<skill>.json` (walk up from `process.cwd()` to filesystem root; first found wins)
 2. Global `~/.agents/<skill>.json`
-3. Backward-compat `.pi/<skill>.json` (walk up from cwd; first found wins)
-4. Env-var / caller defaults passed into `loadConfig`
+3. Env-var / caller defaults passed into `loadConfig`
 
 Secrets stay in environment variables (for example `SLACK_BOT_TOKEN`). JSON config holds non-secret defaults only (default channel, default Jira project, limits). Any string value that starts with `$` is interpolated from `process.env` (empty string if unset). Malformed JSON in a config file must not crash the script — the resolver prints a one-line warning to stderr and skips that file.
 

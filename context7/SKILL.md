@@ -16,7 +16,7 @@ Pull live library documentation from Context7 instead of relying on model memory
 export CONTEXT7_API_KEY=ctx7sk-...
 ```
 
-3. Or set `apiKey` in `~/.agents/context7.json` (or the legacy `~/.pi/agent/extensions/context7/config.json`). Optional TTL overrides:
+3. Or set `apiKey` in `~/.agents/context7.json`. Optional TTL overrides:
 
 ```json
 {
@@ -25,7 +25,7 @@ export CONTEXT7_API_KEY=ctx7sk-...
 }
 ```
 
-Cache lives under `~/.agents/context7/cache/` (read-through fallback to the legacy pi cache).
+Cache lives under `~/.agents/context7/cache/`.
 
 ## Scripts
 

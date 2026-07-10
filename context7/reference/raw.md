@@ -14,4 +14,4 @@ node scripts/raw.mjs --doc-ref ctx7:docs:abc123...
 
 ## Notes
 
-Looks up `~/.agents/context7/cache/docs/objects/` first, then the legacy `~/.pi/agent/extensions/context7/cache/docs/objects/` layout. No API key required. Exits 1 with an actionable message if the ref is missing — run `docs.mjs` first.
+Looks up `~/.agents/context7/cache/docs/objects/`. No API key required. Exits 1 with an actionable message if the ref is missing — run `docs.mjs` first.

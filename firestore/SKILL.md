@@ -13,7 +13,7 @@ npx -y @dreki-gg/firestore-cli <command>
 
 ## Setup
 
-1. Config file — `.agents/firestore.json` in the project (or legacy `.pi/firestore.json`), walked up from the working directory:
+1. Config file — `.agents/firestore.json` in the project, walked up from the working directory:
 
 ```json
 {
