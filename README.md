@@ -34,13 +34,6 @@ Think through problems before writing code.
   npx skills@latest add jalbarrang/skills/code-reviewer
   ```
 
-- **ast-grep** — Structural (AST-based) code search and rewrite via the
-  `ast-grep` CLI. Match code by shape and run mechanical refactors.
-
-  ```
-  npx skills@latest add jalbarrang/skills/ast-grep
-  ```
-
 - **commit** — Inspect changes, stage only related files, and write Conventional Commits messages. Never bundles unrelated work; never pushes unless asked.
 
   ```
