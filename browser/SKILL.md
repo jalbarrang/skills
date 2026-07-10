@@ -5,7 +5,7 @@ description: Search the web, read a page as markdown, screenshot pages, interact
 
 # browser
 
-Two thin Node scripts for search + static page fetch, plus direct `agent-browser` for everything interactive. Screenshots are image files — the harness's own vision reads them (the pi extension's `analyze` vision flag does **not** port).
+Two thin Node scripts for search + static page fetch, plus direct `agent-browser` for everything interactive. Screenshots are image files — read them with your own vision (via your file-reading tool); there is no separate analyze step.
 
 ## Setup
 

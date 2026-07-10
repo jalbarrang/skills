@@ -12,7 +12,7 @@ node scripts/docs.mjs --name react --topic hooks --page 2
 
 ## Flags
 
-- `--name <lib>` — package/library name; auto-resolves to a Context7 ID (same scorer as the pi extension).
+- `--name <lib>` — package/library name; auto-resolves to a Context7 ID (exact-name and trust-score ranking).
 - `--id </org/lib>` — exact Context7 library ID; skips resolve.
 - `--query <q>` — freeform documentation request (default effective query: `overview`).
 - `--topic <t>` — optional focus hint appended as `Focus: …`.

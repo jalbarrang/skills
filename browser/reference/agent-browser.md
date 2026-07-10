@@ -73,7 +73,7 @@ agent-browser connect 9222
 agent-browser --cdp 9222 snapshot
 ```
 
-`connect <port|url>` accepts `9222`, `ws://…`, or `http://…`. Global `--cdp <port>` attaches for that invocation. The pi extension also honored `PI_BROWSER_CDP`; pass the same value to `connect` / `--cdp` here. Connected browsers are not auto-closed.
+`connect <port|url>` accepts `9222`, `ws://…`, or `http://…`. Global `--cdp <port>` attaches for that invocation. If a `PI_BROWSER_CDP`-style endpoint is already known, pass the same value to `connect` / `--cdp`. Connected browsers are not auto-closed.
 
 ## Session hygiene
 

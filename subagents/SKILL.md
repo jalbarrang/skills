@@ -27,8 +27,8 @@ Run from any cwd as `node <skill-dir>/scripts/<name>.mjs …`.
 
 | Script | Usage |
 |--------|--------|
-| `spawn.mjs` | `node scripts/spawn.mjs --agent <name> --task <text> [--model <m>] [--thinking <t>] [--cwd <dir>] [--timeout <sec>]` |
-| `parallel.mjs` | `node scripts/parallel.mjs --tasks <file.json\|inline JSON>` |
+| `spawn.mjs` | `node <skill>/scripts/spawn.mjs --agent <name> --task <text> [--model <m>] [--thinking <t>] [--cwd <dir>] [--timeout <sec>]` |
+| `parallel.mjs` | `node <skill>/scripts/parallel.mjs --tasks <file.json\|inline JSON>` |
 
 `parallel.mjs` expects a JSON array of `{ agent, task, model?, thinking?, cwd?, timeout? }`. Results print under `## <agent> · <model>` in completion order; final line is `N succeeded / M failed` (nonzero exit if any failed).
 

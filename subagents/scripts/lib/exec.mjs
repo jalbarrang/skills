@@ -27,6 +27,14 @@ export function runCommand(cmd, args, { cwd, timeoutMs, env } = {}) {
     });
     child.on('error', (err) => {
       clearTimeout(timer);
+      if (err.code === 'ENOENT') {
+        const hint =
+          cmd === 'cursor-agent'
+            ? 'cursor-agent is not installed. Install Cursor CLI (https://cursor.com/cli) and run `agent login`, or use a non-cursor model to route through pi.'
+            : `\`${cmd}\` is not on PATH. Models without a \`cursor:\` prefix run through the pi CLI; install pi, or pass --model cursor:<model> to use cursor-agent instead.`;
+        reject(new Error(`Backend not found: ${cmd}. ${hint}`));
+        return;
+      }
       reject(err);
     });
     child.on('close', (code) => {
