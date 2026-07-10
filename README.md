@@ -89,6 +89,22 @@ Turn changes and decisions into clear, scannable artifacts.
   npx skills@latest add jalbarrang/skills/write-a-skill
   ```
 
+## Services & Integrations
+
+Talk to external services through dependency-free scripts — digest to stdout, full payload to a temp file.
+
+- **jira** — View, search, and comment on Jira work items via the authenticated Atlassian CLI (`acli`). JQL search, ticket digests with full descriptions and comment threads written to temp files, `defaultProject` shorthand for bare ticket numbers.
+
+  ```
+  npx skills@latest add jalbarrang/skills/jira
+  ```
+
+- **slack** — Read Slack channels and threads, search the workspace, post/edit/delete bot messages, and download shared files via the Slack Web API. Plain `fetch`, cursor pagination, and rate-limit retry — needs `SLACK_BOT_TOKEN` (and `SLACK_USER_TOKEN` for search).
+
+  ```
+  npx skills@latest add jalbarrang/skills/slack
+  ```
+
 ## Communication
 
 - **adhd-mode** — Shape output for a reader with ADHD: lead with the next action,
