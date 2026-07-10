@@ -41,6 +41,36 @@ Think through problems before writing code.
   npx skills@latest add jalbarrang/skills/ast-grep
   ```
 
+- **commit** — Inspect changes, stage only related files, and write Conventional Commits messages. Never bundles unrelated work; never pushes unless asked.
+
+  ```
+  npx skills@latest add jalbarrang/skills/commit
+  ```
+
+- **lsp** — One-shot LSP queries (diagnostics, hover, definitions, references, symbols) by spawning the project's language server. For harnesses without native LSP.
+
+  ```
+  npx skills@latest add jalbarrang/skills/lsp
+  ```
+
+- **context7** — Fetch current, version-accurate library docs from Context7 before coding against a third-party API, with a persistent local cache and raw-document retrieval by docRef.
+
+  ```
+  npx skills@latest add jalbarrang/skills/context7
+  ```
+
+- **subagents** — Spawn isolated subagents (scout, reviewer, worker, and 6 more) on the pi or cursor-agent backends, with model routing, single spawns, and parallel fan-out.
+
+  ```
+  npx skills@latest add jalbarrang/skills/subagents
+  ```
+
+- **browser** — Web search (DuckDuckGo/Google CSE/Brave), page-to-markdown extraction, and interactive browsing, screenshots, and console capture via the `agent-browser` CLI.
+
+  ```
+  npx skills@latest add jalbarrang/skills/browser
+  ```
+
 - **handoff** — Distill the current conversation into a self-contained prompt you
   can paste into a fresh chat. Lossless context transfer instead of compaction.
 
@@ -103,6 +133,24 @@ Talk to external services through dependency-free scripts — digest to stdout, 
 
   ```
   npx skills@latest add jalbarrang/skills/slack
+  ```
+
+- **discord** — Read Discord guild channels and message history and download attachments via bot-token REST. ToS-safe reads only — needs `DISCORD_BOT_TOKEN`.
+
+  ```
+  npx skills@latest add jalbarrang/skills/discord
+  ```
+
+- **datadog** — Search Datadog logs and RUM events through the HTTP API. Digest to stdout, full JSON events to a temp file — needs `DD_API_KEY` + `DD_APP_KEY`.
+
+  ```
+  npx skills@latest add jalbarrang/skills/datadog
+  ```
+
+- **firestore** — Read-only Firestore access (collections, filtered queries, gets, counts, relation mapping) via the published `@dreki-gg/firestore-cli`.
+
+  ```
+  npx skills@latest add jalbarrang/skills/firestore
   ```
 
 ## Communication
