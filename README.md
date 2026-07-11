@@ -17,6 +17,8 @@ node _global/install.mjs          # symlink into detected harnesses (--dry-run t
 
 Edit the repo file; every harness sees the change immediately. Cursor is the one exception — its global User Rules have no file mount, so paste the content into Cursor → Settings → Rules once.
 
+The content is **my personal config** — the model table reflects my subscriptions and the output shaping reflects how I read. If you want this pattern with your own opinions, fork the repo (or just copy `install.mjs`) and replace `AGENTS.md` with yours; the installer doesn't care what's in the file.
+
 ## Planning & Design
 
 Think through problems before writing code.
