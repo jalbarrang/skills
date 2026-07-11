@@ -27,17 +27,16 @@ entry point small.
 | `references/planning-context.md` | The moment you form an opinion in Phase 1 — maintain `context.md` deliberation. |
 | `references/visual-prototype.md` | The work changes UI / layout / styling — force-write an HTML prototype. |
 | `references/handoff-template.md` | You are about to write a plan's `HANDOFF.md`. |
+| `references/execution-discipline.md` | You are executing or delegating tasks, or closing out a plan — gates, scoping, reconcile, discovered work. |
 
 ---
 
 ## Phase 1 — Plan
 
-Reach shared understanding *before* writing a plan. Do not write product code in
-this phase.
+Reach shared understanding *before* writing a plan. Do not write product code in this phase — the only files you may create or modify are under `.plans/` (context.md, prototypes) until the plan is approved. Where the harness has a native planning mode (Cursor's Plan mode, Claude Code's plan mode), run Phase 1 inside it so the read-only discipline is enforced, not just promised.
 
 ### 1. Understand intent
-Clarify the goal through dialogue. Push back on weak assumptions, name
-trade-offs, ask focused questions when a real choice exists. As soon as you form
+Clarify the goal through dialogue. Push back on weak assumptions, name trade-offs, ask focused questions when a real choice exists. Batch clarifications: at most 5 questions in one message, each with enumerated options (and a free-form escape) so the user can answer in seconds — never drip one question per turn. As soon as you form
 an opinion, start a deliberation record — load `references/planning-context.md`
 and keep `.plans/<plan>/context.md` current.
 
@@ -129,8 +128,7 @@ taskman add-task --plan <plan-name> "short label" --reason "gap found while doin
 ```
 
 ### 5. Final verification
-After all tasks are done or blocked, run the project's typecheck, lint, and test
-commands. Fix anything you broke before declaring done.
+After all tasks are done or blocked, run the project's typecheck, lint, and test commands. Fix anything you broke before declaring done. Then `taskman reconcile` (read-only) to confirm registry and task state agree — see `references/execution-discipline.md` before ever passing `--apply`.
 
 ### 6. Report
 ```bash

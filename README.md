@@ -21,6 +21,12 @@ Think through problems before writing code.
   npx skills@latest add jalbarrang/skills/planwork
   ```
 
+- **taskman** — The `.plans/` ledger CLI's data contract: status-as-projection, stateless plan resolution, reconcile semantics, and the common mistakes that corrupt plan state. Companion to planwork.
+
+  ```
+  npx skills@latest add jalbarrang/skills/taskman
+  ```
+
 ## Coding & Implementation
 
 - **code-reviewer** — Bug-focused review driven by a per-project context.
