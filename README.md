@@ -24,7 +24,8 @@ The content is **my personal config** — the model table reflects my subscripti
 Think through problems before writing code.
 
 - **planwork** — Turn a goal, PRD, or brainstorm into a grounded, self-contained
-  plan in the harness-agnostic `.plans/` ledger (via the `taskman` CLI), then
+  plan in the harness-agnostic taskman ledger (default `.taskman/plans/`, via
+  the `taskman` CLI), then
   execute it task-by-task with drift checks and verification gates. Unifies plan
   creation and implementation; references-folder modes cover deliberation
   (`context.md`) and visual prototypes.
@@ -33,7 +34,7 @@ Think through problems before writing code.
   npx skills@latest add jalbarrang/skills/planwork
   ```
 
-- **taskman** — The `.plans/` ledger CLI's data contract: status-as-projection, stateless plan resolution, reconcile semantics, and the common mistakes that corrupt plan state. Companion to planwork.
+- **taskman** — The plan ledger CLI's data contract (default `.taskman/plans/`, configurable via `.taskmanrc`): status-as-projection, stateless plan resolution, ledger-root discovery, reconcile semantics, and the common mistakes that corrupt plan state. Companion to planwork.
 
   ```
   npx skills@latest add jalbarrang/skills/taskman

@@ -1,17 +1,20 @@
 ---
 name: planwork
-description: Plan and execute non-trivial work through the taskman plan ledger. Use to turn a goal, PRD, or brainstorm into a grounded, self-contained plan a fresh agent can implement, then work it task-by-task with drift checks and verification gates. Harness-agnostic — state lives in `.plans/` via the taskman CLI, not in editor-specific todo files. Use when the user says plan, plan it, write a plan, implement a plan, execute a plan, or work a plan.
+description: Plan and execute non-trivial work through the taskman plan ledger. Use to turn a goal, PRD, or brainstorm into a grounded, self-contained plan a fresh agent can implement, then work it task-by-task with drift checks and verification gates. Harness-agnostic — state lives in the taskman plan ledger (default `.taskman/plans/`, discover with `taskman root`), not in editor-specific todo files. Use when the user says plan, plan it, write a plan, implement a plan, execute a plan, or work a plan.
 ---
 
 # planwork
 
 Two phases. **Plan** turns intent into a grounded, self-contained plan in the
-`.plans/` ledger. **Execute** works that plan top-to-bottom with drift checks and
+taskman ledger. **Execute** works that plan top-to-bottom with drift checks and
 verification gates. Read the phase you need; you rarely need both in one turn.
 
-Plan and task state is **durable and harness-agnostic**: it lives under `.plans/`
-and is driven by the `taskman` CLI, never by an editor's native todo panel or an
-improvised `.plan.md` file. Any agent with a shell produces the same ledger.
+Plan and task state is **durable and harness-agnostic**: it lives in the plan
+ledger and is driven by the `taskman` CLI, never by an editor's native todo
+panel or an improvised `.plan.md` file. Any agent with a shell produces the
+same ledger. The ledger root defaults to `.taskman/plans/` and can be moved by
+a `.taskmanrc` — run `taskman root` once to discover it, and read `<root>`
+below as that folder.
 
 > Requires the `taskman` CLI on PATH (`taskman --version`). If missing, prefix
 > commands with `npx @dreki-gg/taskman`. See the `taskman` skill for the full
@@ -33,12 +36,12 @@ entry point small.
 
 ## Phase 1 — Plan
 
-Reach shared understanding *before* writing a plan. Do not write product code in this phase — the only files you may create or modify are under `.plans/` (context.md, prototypes) until the plan is approved. Where the harness has a native planning mode (Cursor's Plan mode, Claude Code's plan mode), run Phase 1 inside it so the read-only discipline is enforced, not just promised.
+Reach shared understanding *before* writing a plan. Do not write product code in this phase — the only files you may create or modify are under the ledger root (context.md, prototypes) until the plan is approved. Where the harness has a native planning mode (Cursor's Plan mode, Claude Code's plan mode), run Phase 1 inside it so the read-only discipline is enforced, not just promised.
 
 ### 1. Understand intent
 Clarify the goal through dialogue. Push back on weak assumptions, name trade-offs, ask focused questions when a real choice exists. Batch clarifications: at most 5 questions in one message, each with enumerated options (and a free-form escape) so the user can answer in seconds — never drip one question per turn. As soon as you form
 an opinion, start a deliberation record — load `references/planning-context.md`
-and keep `.plans/<plan>/context.md` current.
+and keep `<root>/<plan>/context.md` current.
 
 ### 2. Investigate the codebase (read-only)
 Highest-leverage step. A plan that describes what *should* exist instead of what
@@ -53,7 +56,7 @@ Never guess from file names. Read the real files.
 ### 3. Prototype, if visual
 If the work changes how anything looks or behaves visually, load
 `references/visual-prototype.md` and write an HTML prototype to
-`.plans/_prototypes/<slug>.html` before finalizing. Get a reaction first.
+`<root>/_prototypes/<slug>.html` before finalizing. Get a reaction first.
 
 ### 4. Write the plan into the ledger
 Distill `context.md` into a `HANDOFF.md` (load `references/handoff-template.md`)
@@ -62,7 +65,7 @@ frontmatter:
 
 ```bash
 taskman create-plan --name <plan-name> --title "Title" \
-  --handoff-file .plans/<plan-name>/HANDOFF.md \
+  --handoff-file <root>/<plan-name>/HANDOFF.md \
   --tasks '[{"description":"<concrete task>"},{"description":"<next task>"}]'
 ```
 
@@ -93,8 +96,8 @@ beyond what each task needs, and don't deviate silently.
 taskman list                       # plans in this repo
 taskman status --plan <plan-name>  # task ids + progress
 ```
-Read `.plans/<plan-name>/HANDOFF.md` in full (and `INITIATIVE.md` if linked).
-The first `pending` task is the start.
+Read `<root>/<plan-name>/HANDOFF.md` in full (and `INITIATIVE.md` if linked) —
+`taskman root` prints the ledger root. The first `pending` task is the start.
 
 ### 2. Drift check (do this FIRST)
 Plans go stale. If the HANDOFF records a base commit, run `git rev-parse HEAD`;
@@ -143,8 +146,8 @@ Tell the user: N/M done, which tasks are blocked and why, any deviations and the
 - **Grounded, not aspirational** — read real files first; a plan against imagined
   code fails.
 - **Self-contained** — the implementer sees only the HANDOFF and the ledger.
-- **Harness-agnostic state** — plan/task lifecycle lives in `.plans/` via taskman,
-  never an editor's native todo file.
+- **Harness-agnostic state** — plan/task lifecycle lives in the taskman ledger
+  (`taskman root` shows where), never an editor's native todo file.
 - **Encode the API surface** — the biggest time sink is discovering signatures;
   spell them out in the HANDOFF.
 - **Ordered** — earlier tasks build foundations for later ones; don't skip ahead.

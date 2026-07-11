@@ -9,11 +9,11 @@ Tasks themselves do **not** live here. They go into the ledger via
 the implementer everything needed to work those tasks: real code state, exact
 signatures, ordering, patterns, and a verification gate per task archetype.
 
-Write it to `.plans/<plan-name>/HANDOFF.md`, then:
+Write it to `<root>/<plan-name>/HANDOFF.md` (where `<root>` is the ledger root from `taskman root`, default `.taskman/plans`), then:
 
 ```bash
 taskman create-plan --name <plan-name> --title "<Title>" \
-  --handoff-file .plans/<plan-name>/HANDOFF.md \
+  --handoff-file <root>/<plan-name>/HANDOFF.md \
   --tasks '[{"description":"<task 1>"},{"description":"<task 2>"}]'
 ```
 

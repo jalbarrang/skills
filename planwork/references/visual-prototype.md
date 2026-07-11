@@ -27,7 +27,8 @@ If you cannot picture a screen or component changing, skip the prototype.
 
 ### 2. Write the HTML file
 Author a complete, self-contained HTML document and **write it to
-`.plans/_prototypes/<slug>.html`** with the `write` tool. Build it **with full
+`<root>/_prototypes/<slug>.html`** (ledger root from `taskman root`) with the
+`write` tool. Build it **with full
 freedom**: no template engine, no imposed theme — pick your own markup, fonts,
 colors, layout, and inline `<style>`/`<script>`. Assume nothing about a host
 page; the file must stand alone when opened directly in a browser.
@@ -41,7 +42,7 @@ real design taste, delegate the markup to a `ux-designer` subagent and write its
 HTML to the file.
 
 ### 3. Get a reaction before finalizing
-Tell the user the path (`.plans/_prototypes/<slug>.html`) and ask them to open it
+Tell the user the path (`<root>/_prototypes/<slug>.html`) and ask them to open it
 in a browser. Stop and ask what they think. Iterate — rewrite the same file with
 revisions — until the visual direction is agreed. Only then move toward creating
 the plan.

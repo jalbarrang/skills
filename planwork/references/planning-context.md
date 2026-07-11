@@ -11,15 +11,16 @@ an opinion but written nothing down, that is the signal to update `context.md`.
 
 ## What it is
 
-`.plans/<plan-name>/context.md` — a deliberation document, **not** the plan. It
-captures the *why* and the *roads not taken*, which `HANDOFF.md` and the task
-list deliberately omit.
+`<root>/<plan-name>/context.md` (`<root>` is the ledger root from `taskman
+root`, default `.taskman/plans`) — a deliberation document, **not** the plan.
+It captures the *why* and the *roads not taken*, which `HANDOFF.md` and the
+task list deliberately omit.
 
 ## Process
 
 ### 1. Create it early
-As soon as you understand the intent, write `.plans/<plan-name>/context.md` with
-the `write` tool. Do not wait until you are ready to create the plan.
+As soon as you understand the intent, write `<root>/<plan-name>/context.md`
+with the `write` tool. Do not wait until you are ready to create the plan.
 
 ### 2. Keep these sections current
 - **Intent** — what the user actually wants, in their terms.

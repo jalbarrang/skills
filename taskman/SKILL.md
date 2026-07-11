@@ -1,11 +1,11 @@
 ---
 name: taskman
-description: Drive the taskman CLI over a .plans/ JSONL ledger — create plans and initiatives, revise plans, track task status, and reconcile drift. Load when running taskman commands (create-plan, create-initiative, revise-plan, create-handoff, status, list, update-task, add-task, reconcile, close), tracking plan/task progress across sessions or harnesses, or inspecting a .plans/ directory. Covers the status-is-a-projection model, stateless plan resolution, and reconcile semantics.
+description: Drive the taskman CLI over a JSONL plan ledger (default .taskman/plans/, configurable via .taskmanrc) — create plans and initiatives, revise plans, track task status, and reconcile drift. Load when running taskman commands (create-plan, create-initiative, revise-plan, create-handoff, status, list, update-task, add-task, reconcile, close, root), tracking plan/task progress across sessions or harnesses, or inspecting a plan ledger directory. Covers the status-is-a-projection model, stateless plan resolution, ledger-root discovery, and reconcile semantics.
 ---
 
 # taskman
 
-`taskman` manages plan/task state on disk under `.plans/` so planning agents keep durable progress across sessions and harnesses. Install: `npm i -g @dreki-gg/taskman` or prefix commands with `npx @dreki-gg/taskman`.
+`taskman` manages plan/task state on disk under a plans root (default `.taskman/plans/`) so planning agents keep durable progress across sessions and harnesses. Install: `npm i -g @dreki-gg/taskman` or prefix commands with `npx @dreki-gg/taskman`.
 
 The command and flag inventory is **not** reproduced here — it lives in `--help`, which is always current for the installed version:
 
@@ -18,17 +18,21 @@ This skill teaches what `--help` cannot: the data contract and the three invaria
 
 ## The ledger
 
-Everything is plain JSONL/Markdown under `.plans/` in the current directory:
+Everything is plain JSONL/Markdown under the plans root — `.taskman/plans/` in the current directory by default:
 
-- `.plans/plans.jsonl` — plan registry
-- `.plans/initiatives.jsonl` — initiative registry (initiatives group plans)
-- `.plans/<plan>/tasks.jsonl` — one plan's tasks (first line is metadata)
-- `.plans/<plan>/HANDOFF.md`, `.plans/<initiative>/INITIATIVE.md` — prose
+- `<root>/plans.jsonl` — plan registry
+- `<root>/initiatives.jsonl` — initiative registry (initiatives group plans)
+- `<root>/<plan>/tasks.jsonl` — one plan's tasks (first line is metadata)
+- `<root>/<plan>/HANDOFF.md`, `<root>/<initiative>/INITIATIVE.md` — prose
+
+### Discovering the root
+
+Run `taskman root --json` (`{ plans_root, source, absolute }`) before assuming any ledger path. A `.taskmanrc` JSON file in the working directory relocates the ledger: `{"plans-root": "some/dir"}` means `some/dir/plans.jsonl` — the value IS the ledger folder. Resolution is cwd-only: no directory walk-up, no env var.
 
 ## Invariants (read before acting)
 
 1. **Status is a projection of task state, not a manual flag.** A plan becomes `done` when its active tasks are all resolved and no follow-ups remain; an initiative becomes `done` when every member plan is terminal. `update-task` re-derives the registry automatically.
-2. **Plan resolution is stateless.** A command targets a plan via `--plan <name>` (accepts `.plans/<name>`), else the *single* in-progress plan. Ambiguous or missing → non-zero exit listing the candidates.
+2. **Plan resolution is stateless.** A command targets a plan via `--plan <name>` (any directory prefix is stripped, so a full ledger path works too), else the *single* in-progress plan. Ambiguous or missing → non-zero exit listing the candidates.
 3. **Manual terminal statuses are never auto-reverted.** `reconcile` only moves `in-progress ⇄ done`; it never resurrects a `superseded`/`abandoned` plan or regresses a finished one.
 
 ## Core patterns
