@@ -7,6 +7,16 @@ development, and tooling. Install any skill with:
 npx skills@latest add jalbarrang/skills/<name>
 ```
 
+## Global agent instructions
+
+`_global/AGENTS.md` is the canonical cross-harness instruction file (prose formatting, model routing policy, output shaping). One command symlinks it into every harness's global mount point (`~/.agents/AGENTS.md`, `~/.pi/agent/AGENTS.md`, `~/.claude/CLAUDE.md`, `~/.codex/AGENTS.md`, `~/.gemini/GEMINI.md`):
+
+```
+node _global/install.mjs          # symlink into detected harnesses (--dry-run to preview)
+```
+
+Edit the repo file; every harness sees the change immediately. Cursor is the one exception — its global User Rules have no file mount, so paste the content into Cursor → Settings → Rules once.
+
 ## Planning & Design
 
 Think through problems before writing code.
