@@ -60,10 +60,31 @@ concrete, codebase-specific lines. Apply the anti-rot rules ruthlessly:
 Create the `.code-reviewer/` directory if needed. Mention whether to commit the
 file (recommended: commit it so the whole team's reviews share the context).
 
-## Step 5: Wrap up
+## Step 5: Offer packaged lenses
 
-Summarize tersely: what was captured, and the 2-3 invariants that will most shape
-future reviews. Then recommend the next command:
+The skill ships a lens catalog in `<skill-dir>/lenses/` (one `*.md` per lens; the
+line under each H1 is its description). Offer them as an opt-in multi-select:
+
+1. List each catalog lens by name + its description line. Use the harness's
+   structured question tool when one exists (multi-select, **default: none
+   selected**). Make clear lenses are optional — with none selected, reviews are
+   pure context-driven bug hunting.
+2. For each selected lens, **copy** the file into `.code-review/lenses/`
+   (create the directory if needed). Copies are project-owned: the user edits
+   them freely and they are never auto-synced with the catalog.
+3. Write `.code-review.json` with `defaultLenses` set to the selected names
+   (merge if the file exists — never drop lenses the project already had).
+4. Mention that custom lenses are just additional `*.md` files in the same
+   directory, discovered identically.
+
+If re-running `init` on a project that already has lenses, show what's active
+and only offer catalog lenses not yet copied.
+
+## Step 6: Wrap up
+
+Summarize tersely: what was captured, which lenses were enabled (or `none`), and
+the 2-3 invariants that will most shape future reviews. Then recommend the next
+command:
 
 - `/code-reviewer review` — run a review now against the default diff.
 - `/code-reviewer learn` — anytime a review gets a call wrong, fold the lesson

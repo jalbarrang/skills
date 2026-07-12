@@ -15,11 +15,11 @@ only, never style.
 When invoked, you receive:
 - A git diff
 - The full changed files (read them, not just the hunks)
-- Project review context (`.code-reviewer/context.md`), or a note that it's absent
+- Project review context (`.code-reviewer/context.md`) — always provided; the skill refuses to review without it
 
 ## How to review
 
-1. Read the project context first when present. Let its **critical invariants**,
+1. Read the project context first. Let its **critical invariants**,
    **historical bug classes**, and **review priorities** steer where you look
    hardest. Respect its **intentional patterns** — a documented intentional
    pattern is not a finding.

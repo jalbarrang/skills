@@ -25,12 +25,12 @@ node <skill-dir>/scripts/lenses.mjs --lens code-quality
 ```
 
 - Discovery matches the pi extension: `.code-review.json` (`lensDir`, default `.code-review/lenses`) and every `*.md` therein. Applicable lenses = `--lens` list, else `defaultLenses`, else all.
-- If the script prints the "No lenses configured" message, continue without lens criteria (context-only / generalized review). Do not invent lenses.
+- If the script prints the "No lenses configured" message, continue without lens criteria (context-only review). Do not invent lenses; mention that packaged lenses can be enabled via `/code-reviewer init`.
 - Otherwise treat the printed markdown as additional review criteria. Severity definitions inside each lens override the defaults in `references/severity.md`.
 
 ## Step 3: Discovery (single pass)
 
-Invoke the `bug-finder` subagent with: the diff, the full changed files, lens instructions (if any), and the contents of `.code-reviewer/context.md` (or a note that it's absent → `generalized` mode).
+Invoke the `bug-finder` subagent with: the diff, the full changed files, lens instructions (if any), and the contents of `.code-reviewer/context.md` (guaranteed present — Setup hard-fails without it).
 
 The finder casts a wide net within these categories only: logic, state-management, null-safety, control-flow, security, concurrency, type-safety, error-handling. It excludes style, naming, comments, docs, formatting, import ordering, and optional refactors. Each finding carries: `file`, `lineRange`, `category`, `severity` (1-10), `confidence` (0-100), `summary`, `reasoning`. When lenses are present, also emit per-lens JSON findings using the shape in `references/severity.md` (`blocker` / `warning` / `note`).
 
@@ -61,7 +61,6 @@ Group findings (verified scores when the verifier ran; finder scores otherwise):
 A finding lands in the highest tier whose thresholds it meets. Tag any finding that skipped verification (Step 4 gate) as `unverified`. Render lens-style lines per `references/severity.md`. Also include:
 
 - **Dismissed** — each with its one-line reason (only when the verifier ran).
-- **Context mode** — `project-specific` (context was used) or `generalized` (context absent; recommend `/code-reviewer init`).
 - **Lenses** — names applied, or `none`.
 - **Verification** — `ran` or `skipped (low-risk diff)`.
 - **Metadata** — files reviewed, findings from discovery, findings after verification (or `n/a` when skipped), final count.

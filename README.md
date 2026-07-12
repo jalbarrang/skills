@@ -43,8 +43,10 @@ Think through problems before writing code.
 ## Coding & Implementation
 
 - **code-reviewer** — Bug-focused review driven by a per-project context.
-  `init` interviews your repo and writes `.code-reviewer/context.md` (the
-  invariants, intentional patterns, and bug classes that make review sharp);
+  `init` is required (everything else hard-fails without it): it interviews your
+  repo, writes `.code-reviewer/context.md` (the invariants, intentional patterns,
+  and bug classes that make review sharp), and offers packaged lenses
+  (clean-code, ddd, security, concurrency, api-compat) as opt-in copies;
   `review` runs a context-aware discovery pass plus a skeptical verifier and
   reports tiered findings; `learn` folds each wrong call back into the context
   (anti-rot); `status` checks context health.
