@@ -73,6 +73,12 @@ Think through problems before writing code.
   npx skills@latest add jalbarrang/skills/subagents
   ```
 
+- **workflows** — Design, validate, and run bounded multi-agent workflows (sequential steps, parallel groups, capped fan-out, ≤100 agents) by spawning harness CLIs as runners. Background runs with status/stop/resume, saved reusable chains. For Cursor, Codex, pi, and any `.agents/`-compatible harness — Claude Code has this natively.
+
+  ```
+  npx skills@latest add jalbarrang/skills/workflows
+  ```
+
 - **browser** — Web search (DuckDuckGo/Google CSE/Brave), page-to-markdown extraction, and interactive browsing, screenshots, and console capture via the `agent-browser` CLI.
 
   ```

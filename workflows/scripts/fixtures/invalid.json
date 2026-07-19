@@ -1,0 +1,16 @@
+{
+  "name": "Bad Name!",
+  "task": "",
+  "agentScope": "everyone",
+  "chain": [
+    { "agent": "scout", "task": "First", "as": "dup" },
+    { "agent": "worker", "task": "Second", "as": "dup", "concurrency": "not-a-number" },
+    {
+      "expand": { "from": "missing", "path": "no-slash", "item": "9bad" },
+      "parallel": { "agent": "worker", "task": "Fan out" },
+      "collect": { "as": "dup" },
+      "concurrency": 99
+    },
+    { "note": "not a phase at all" }
+  ]
+}

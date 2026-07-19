@@ -1,0 +1,25 @@
+{
+  "name": "fix-todos-fanout",
+  "description": "Plan TODO fixes as JSON, fan out one worker per file, then summarize the results.",
+  "task": "Fix all TODO comments in the repository.",
+  "chain": [
+    {
+      "agent": "scout",
+      "label": "Plan",
+      "as": "plan",
+      "task": "For {task}: output ONLY a JSON object of the form {\"files\":[{\"path\":\"...\",\"note\":\"...\"}]} listing every file containing TODO comments."
+    },
+    {
+      "label": "Fix each file",
+      "expand": { "from": "plan", "path": "/files", "item": "file", "maxItems": 8 },
+      "parallel": { "agent": "worker", "task": "Fix the TODO comments in {file.path}. Planner note: {file.note}. Full item: {item}" },
+      "collect": { "as": "fixes" },
+      "concurrency": 4
+    },
+    {
+      "agent": "worker",
+      "label": "Summarize",
+      "task": "Summarize these fix reports for the original task ({task}): {outputs.fixes}"
+    }
+  ]
+}

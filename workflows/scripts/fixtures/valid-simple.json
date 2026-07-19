@@ -1,0 +1,20 @@
+{
+  "name": "review-and-summarize",
+  "description": "Two readers in parallel, then a synthesizer that merges their findings.",
+  "task": "Review the src/ directory for dead code and produce a cleanup report.",
+  "chain": [
+    {
+      "label": "Recon",
+      "concurrency": 2,
+      "parallel": [
+        { "agent": "scout", "task": "List candidate dead files for: {task}", "as": "deadFiles" },
+        { "agent": "scout", "task": "List unused exports for: {task}", "as": "unusedExports" }
+      ]
+    },
+    {
+      "agent": "worker",
+      "label": "Synthesize",
+      "task": "Write a cleanup report for {task} from these findings. Dead files: {outputs.deadFiles} Unused exports: {outputs.unusedExports}"
+    }
+  ]
+}
